@@ -64,14 +64,6 @@
             color: white;
             width: 100%;
         }
-        .products {
-            animation: bounce 0.6s ease forwards;
-        }
-        @keyframes bounce {
-            0% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-            100% { transform: translateY(0); }
-        }
         .product {
             border: 1px solid #ccc;
             margin: 10px;
@@ -92,14 +84,17 @@
             font-size: 20px;
             cursor: pointer;
         }
-        .checkout {
-            display: none;
-            padding: 20px;
-            background-color: #f9f9f9;
-            border: 1px solid #ccc;
+        .reviews {
+            margin-top: 20px;
         }
-        .cart-item {
-            margin: 10px 0;
+        /* Media Queries */
+        @media (max-width: 600px) {
+            header {
+                padding: 10px;
+            }
+            .menu {
+                font-size: 20px;
+            }
         }
     </style>
 </head>
@@ -108,25 +103,37 @@
 <header>
     <h1>A.P FOODS</h1>
     <p>Organic Edible Cutlery</p>
+    <input type="text" placeholder="Search products..." id="searchBar" style="margin: 10px;">
     <div class="menu" onclick="toggleMenu()">⋮</div>
     <div class="menu-items" id="menuItems">
         <a href="#" onclick="showContent('home')">Home</a>
         <a href="#" onclick="showContent('about')">About Us</a>
         <a href="#" onclick="showContent('products')">Products</a>
-        <a href="#" onclick="showContent('checkout')">Checkout</a>
+        <a href="#" onclick="showContent('contact')">Contact Us</a>
+        <a href="#" onclick="showContent('privacy')">Privacy Policy</a>
     </div>
-    <div class="cart" onclick="showCart()">🛒 <span id="cartCount">0</span></div>
+    <div class="cart" onclick="showContent('cart')">🛒 Cart</div>
 </header>
 
 <!-- Home Section -->
 <div id="home" class="content active">
-    <h2>Welcome to A.P FOODS!</h2>
-    <p>Eat Your Cutlery!</p>
+    <div class="banner" style="height: 300px; background-image: url('https://image.shutterstock.com/image-photo/biodegradable-wheat-bran-tableware-made-1519695803'); background-size: cover;">
+        <h1 style="color: white; position: relative; top: 50%; transform: translateY(-50%);">Eat Your Cutlery!</h1>
+    </div>
     <div class="promotion">
         <h2>Special Offers</h2>
         <p>10% off on all products!</p>
         <p>15% off on orders above ₹499!</p>
         <p>Free shipping on orders above ₹499 + Free Gifts!</p>
+        <p>Flat ₹50 shipping on orders below ₹499.</p>
+    </div>
+    <div class="reviews">
+        <h3>Customer Reviews</h3>
+        <p>⭐️⭐️⭐️⭐️⭐️ "Great product! Helped me reduce plastic waste." - John D.</p>
+        <p>⭐️⭐️⭐️⭐️⭐️ "Love the edible spoons! Perfect for parties." - Sarah K.</p>
+        <p>⭐️⭐️⭐️⭐️⭐️ "Quality is excellent, and taste is great!" - Mark T.</p>
+        <p>⭐️⭐️⭐️⭐️⭐️ "I use them daily, very convenient!" - Emily R.</p>
+        <p>⭐️⭐️⭐️⭐️⭐️ "Fantastic eco-friendly option!" - Alex B.</p>
     </div>
 </div>
 
@@ -138,90 +145,81 @@
 </div>
 
 <!-- Products Section -->
-<div id="products" class="content products">
+<div id="products" class="content">
     <h2>Our Products</h2>
-    <div class="product" id="product1">
+    <div class="product">
         <img src="https://via.placeholder.com/150" alt="Edible Spoon">
-        <p>Edible Spoon - ₹20</p>
-        <p id="product1Qty">0</p>
-        <button onclick="changeQuantity('product1', 1)">+</button>
-        <button onclick="changeQuantity('product1', -1)">-</button>
-        <button onclick="addToCart('Edible Spoon', 20, 'product1')">Add to Cart</button>
+        <p>Edible Spoon</p>
+        <p>Price: ₹20</p>
+        <button onclick="addToCart('Edible Spoon', 20)">Add to Cart</button>
     </div>
-    <div class="product" id="product2">
+    <div class="product">
         <img src="https://via.placeholder.com/150" alt="Edible Bowl">
-        <p>Edible Bowl - ₹30</p>
-        <p id="product2Qty">0</p>
-        <button onclick="changeQuantity('product2', 1)">+</button>
-        <button onclick="changeQuantity('product2', -1)">-</button>
-        <button onclick="addToCart('Edible Bowl', 30, 'product2')">Add to Cart</button>
+        <p>Edible Bowl</p>
+        <p>Price: ₹30</p>
+        <button onclick="addToCart('Edible Bowl', 30)">Add to Cart</button>
     </div>
-    <div class="product" id="product3">
+    <div class="product">
         <img src="https://via.placeholder.com/150" alt="Edible Fork">
-        <p>Edible Fork - ₹25</p>
-        <p id="product3Qty">0</p>
-        <button onclick="changeQuantity('product3', 1)">+</button>
-        <button onclick="changeQuantity('product3', -1)">-</button>
-        <button onclick="addToCart('Edible Fork', 25, 'product3')">Add to Cart</button>
+        <p>Edible Fork</p>
+        <p>Price: ₹25</p>
+        <button onclick="addToCart('Edible Fork', 25)">Add to Cart</button>
     </div>
-    <div class="product" id="product4">
+    <div class="product">
         <img src="https://via.placeholder.com/150" alt="Edible Knife">
-        <p>Edible Knife - ₹30</p>
-        <p id="product4Qty">0</p>
-        <button onclick="changeQuantity('product4', 1)">+</button>
-        <button onclick="changeQuantity('product4', -1)">-</button>
-        <button onclick="addToCart('Edible Knife', 30, 'product4')">Add to Cart</button>
+        <p>Edible Knife</p>
+        <p>Price: ₹25</p>
+        <button onclick="addToCart('Edible Knife', 25)">Add to Cart</button>
     </div>
-    <div class="product" id="product5">
+    <div class="product">
         <img src="https://via.placeholder.com/150" alt="Edible Cup">
-        <p>Edible Cup - ₹15</p>
-        <p id="product5Qty">0</p>
-        <button onclick="changeQuantity('product5', 1)">+</button>
-        <button onclick="changeQuantity('product5', -1)">-</button>
-        <button onclick="addToCart('Edible Cup', 15, 'product5')">Add to Cart</button>
+        <p>Edible Cup</p>
+        <p>Price: ₹35</p>
+        <button onclick="addToCart('Edible Cup', 35)">Add to Cart</button>
     </div>
-    <div class="product" id="product6">
+    <div class="product">
         <img src="https://via.placeholder.com/150" alt="Edible Plate">
-        <p>Edible Plate - ₹35</p>
-        <p id="product6Qty">0</p>
-        <button onclick="changeQuantity('product6', 1)">+</button>
-        <button onclick="changeQuantity('product6', -1)">-</button>
-        <button onclick="addToCart('Edible Plate', 35, 'product6')">Add to Cart</button>
+        <p>Edible Plate</p>
+        <p>Price: ₹40</p>
+        <button onclick="addToCart('Edible Plate', 40)">Add to Cart</button>
     </div>
-    <div class="product" id="product7">
+    <div class="product">
         <img src="https://via.placeholder.com/150" alt="Edible Straw">
-        <p>Edible Straw - ₹10</p>
-        <p id="product7Qty">0</p>
-        <button onclick="changeQuantity('product7', 1)">+</button>
-        <button onclick="changeQuantity('product7', -1)">-</button>
-        <button onclick="addToCart('Edible Straw', 10, 'product7')">Add to Cart</button>
+        <p>Edible Straw</p>
+        <p>Price: ₹15</p>
+        <button onclick="addToCart('Edible Straw', 15)">Add to Cart</button>
     </div>
 </div>
 
-<!-- Checkout Section -->
-<div id="checkout" class="content checkout">
-    <h2>Checkout</h2>
+<!-- Contact Us Section -->
+<div id="contact" class="content">
+    <h2>Contact Us</h2>
+    <p>Email: support@apfoods.com</p>
+    <p>Phone: +1234567890</p>
+</div>
+
+<!-- Privacy Policy Section -->
+<div id="privacy" class="content">
+    <h2>Privacy Policy</h2>
+    <p>Your privacy is important to us. We will not share your information with third parties without your consent.</p>
+</div>
+
+<!-- Cart Section -->
+<div id="cart" class="content">
+    <h2>Your Cart</h2>
     <div id="cartItems"></div>
-    <div id="totalAmount"></div>
-    <button onclick="processPayment()">Proceed to Payment</button>
+    <button onclick="checkout()">Checkout</button>
 </div>
 
 <footer>
-    <p>Contact Us | About Us | Privacy Policy</p>
-    <p>&copy; 2023 A.P FOODS. All Rights Reserved.</</p>
+    <p><a href="#" onclick="showContent('about')">About Us</a> | 
+       <a href="#" onclick="showContent('contact')">Contact Us</a> | 
+       <a href="#" onclick="showContent('privacy')">Privacy Policy</a></</p>
+    <p>&copy; 2023 A.P FOODS. All Rights Reserved.</p>
 </footer>
 
 <script>
     let cart = [];
-    let quantities = {
-        product1: 0,
-        product2: 0,
-        product3: 0,
-        product4: 0,
-        product5: 0,
-        product6: 0,
-        product7: 0
-    };
 
     function toggleMenu() {
         const menuItems = document.getElementById('menuItems');
@@ -236,57 +234,27 @@
         document.getElementById(section).classList.add('active');
     }
 
-    function addToCart(name, price, productId) {
-        const qty = quantities[productId];
-        if (qty > 0) {
-            cart.push({ name, price, quantity: qty });
-            updateCartCount();
-            updateCartDisplay();
-            quantities[productId] = 0;
-            document.getElementById(productId + 'Qty').innerText = '0';
+    function addToCart(productName, productPrice) {
+        const existingProduct = cart.find(item => item.name === productName);
+        if (existingProduct) {
+            existingProduct.quantity += 1;
         } else {
-            alert('Please add at least one item to the cart.');
+            cart.push({ name: productName, price: productPrice, quantity: 1 });
         }
-    }
-
-    function changeQuantity(productId, delta) {
-        quantities[productId] += delta;
-        if (quantities[productId] < 0) quantities[productId] = 0;
-        document.getElementById(productId + 'Qty').innerText = quantities[productId];
-    }
-
-    function updateCartCount() {
-        const totalItems = Object.values(quantities).reduce((sum, qty) => sum + qty, 0);
-        document.getElementById('cartCount').innerText = totalItems;
-    }
-
-    function showCart() {
-        showContent('checkout');
         updateCartDisplay();
     }
 
     function updateCartDisplay() {
-        const cartItemsDiv = document.getElementById('cartItems');
-        const totalAmountDiv = document.getElementById('totalAmount');
-        cartItemsDiv.innerHTML = '';
-        let totalAmount = 0;
-
+        const cartItems = document.getElementById('cartItems');
+        cartItems.innerHTML = ''; // Clear existing items
         cart.forEach(item => {
-            const itemDiv = document.createElement('div');
-            itemDiv.classList.add('cart-item');
-            itemDiv.innerText = `${item.name} - ₹${item.price} x ${item.quantity}`;
-            cartItemsDiv.appendChild(itemDiv);
-            totalAmount += item.price * item.quantity;
+            cartItems.innerHTML += `<div>${item.name} - ₹${item.price} x ${item.quantity}</div>`;
         });
-
-        totalAmountDiv.innerText = `Total Amount: ₹${totalAmount}`;
     }
 
-    function processPayment() {
-        alert('Payment processed successfully!');
-        cart = [];
-        updateCartCount();
-        showContent('home');
+    function checkout() {
+        alert('Proceeding to checkout...');
+        // Implement checkout logic here
     }
 </script>
 
