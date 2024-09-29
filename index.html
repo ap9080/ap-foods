@@ -107,22 +107,7 @@
 <header>
     <h1>A.P FOODS</h1>
     <p>Organic Edible Cutlery</p>
-    <input type="text" placeholder="Search products..." class="search-bar">function searchProducts() {
-    const input = document.getElementById('search-bar').value.toLowerCase();
-    const products = document.querySelectorAll('.product'); // Select all products
-
-    products.forEach(product => {
-        const productName = product.querySelector('p').innerText.toLowerCase(); // Get product name
-        if (productName.includes(input)) {
-            product.style.display = 'block'; // Show matching product
-        } else {
-            product.style.display = 'none'; // Hide non-matching product
-        }
-    });
-}
-
-// Add event listener for the search bar
-document.getElementById('search-bar').addEventListener('input', searchProducts);
+    <input type="text" placeholder="Search products..." class="search-bar">
     <div class="menu" onclick="toggleMenu()">⋮</div>
     <div class="menu-items" id="menuItems">
         <a href="#" onclick="showContent('home')">Home</a>
