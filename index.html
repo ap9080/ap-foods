@@ -12,13 +12,13 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            color: #333;
-            background: linear-gradient(to right, white, blue);
+            color: #FFD700; /* Gold color */
+            background: #1C1C1C; /* Matte black */
             overflow-x: hidden;
         }
         header {
             background-color: #6A0EBD;
-            color: white;
+            color: #FFD700;
             padding: 20px;
             text-align: center;
             position: relative;
@@ -61,12 +61,12 @@
             text-align: center;
             padding: 10px;
             background-color: #333;
-            color: white;
+            color: #FFD700;
             width: 100%;
         }
         .products {
             background: linear-gradient(to right, red, purple, maroon);
-            animation: zoomIn 0.5s ease forwards; /* New animation */
+            animation: zoomIn 0.5s ease forwards;
         }
         @keyframes zoomIn {
             from { transform: scale(0); opacity: 0; }
@@ -85,8 +85,26 @@
             max-width: 100%;
             height: auto;
         }
-        .payment-methods {
-            margin-top: 20px;
+        .add-to-cart {
+            background-color: #FFD700;
+            color: #1C1C1C;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+        .reviews, .certificates {
+            margin-top: 30px;
+            text-align: left;
+            padding: 0 20px;
+        }
+        .review, .certificate {
+            border: 1px solid #ccc;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
         }
         .cart {
             position: absolute;
@@ -121,8 +139,9 @@
         <a href="#" onclick="showContent('home')">Home</a>
         <a href="#" onclick="showContent('about')">About Us</a>
         <a href="#" onclick="showContent('products')">Products</a>
+        <a href="#" onclick="showContent('cart')">Cart</a>
     </div>
-    <div class="cart">🛒 Cart</div>
+    <div class="cart" onclick="showContent('cart')">🛒 Cart</div>
 </header>
 
 <!-- Home Section -->
@@ -138,6 +157,24 @@
         <p>Flat ₹50 shipping on orders below ₹499.</p>
     </div>
     <img src="https://media.giphy.com/media/3oEjHMeh6GnC3t6FJa/giphy.gif" alt="Edible Cutlery" style="max-width: 100%; height: auto;">
+    
+    <!-- Customer Reviews Section -->
+    <div class="reviews">
+        <h2>Customer Reviews</h2>
+        <div class="review"><strong>John D.</strong>: "Absolutely loved the edible spoons! Perfect for my parties!"</div>
+        <div class="review"><strong>Mary S.</strong>: "Great quality and very innovative. Highly recommend!"</div>
+        <div class="review"><strong>Sam P.</strong>: "These cutleries made my picnic so much easier!"</div>
+        <div class="review"><strong>Lucy R.</strong>: "Fun and eco-friendly. Kids loved them!"</div>
+        <div class="review"><strong>Tom A.</strong>: "Fantastic product. Will buy again!"</div>
+    </div>
+
+    <!-- Certificates Section -->
+    <div class="certificates">
+        <h2>Certificates</h2>
+        <div class="certificate">ISO 9001:2015 Certified</div>
+        <div class="certificate">FSSAI Registered</div>
+        <div class="certificate">FDA Approved</div>
+    </div>
 </div>
 
 <!-- About Us Section -->
@@ -154,59 +191,28 @@
         <img src="https://via.placeholder.com/150" alt="Edible Spoon">
         <p>Edible Spoon</p>
         <p>Price: ₹20</p>
+        <button class="add-to-cart" onclick="addToCart('Edible Spoon', 20)">Add to Cart</button>
     </div>
     <div class="product">
         <img src="https://via.placeholder.com/150" alt="Edible Bowl">
         <p>Edible Bowl</p>
         <p>Price: ₹30</p>
+        <button class="add-to-cart" onclick="addToCart('Edible Bowl', 30)">Add to Cart</button>
     </div>
-    <div class="payment-methods">
-        <h3>Payment Methods</h3>
-        <p>✔ Cash on Delivery (COD)</p>
-        <p>✔ PayPal</p>
-        <p>✔ Shopify Payments</p>
+    <div class="product">
+        <img src="https://via.placeholder.com/150" alt="Edible Fork">
+        <p>Edible Fork</p>
+        <p>Price: ₹25</p>
+        <button class="add-to-cart" onclick="addToCart('Edible Fork', 25)">Add to Cart</button>
     </div>
-</div>
-
-<!-- Contact Us Section -->
-<div id="contact" class="content">
-    <h2>Contact Us</h2>
-    <p>If you have any questions, feel free to reach out to us!</p>
-    <p>Email: support@apfoods.com</p>
-    <p>Phone: +123-456-7890</p>
-</div>
-
-<!-- Privacy Policy Section -->
-<div id="privacy" class="content">
-    <h2>Privacy Policy</h2>
-    <p>Your privacy is important to us. We will never share your personal information without your consent.</p>
-</div>
-
-<footer>
-    <p><a href="#" onclick="showContent('contact')">Contact Us</a> | <a href="#" onclick="showContent('about')">About Us</a> | <a href="#" onclick="showContent('privacy')">Privacy Policy</a></p>
-    <p>&copy; 2023 A.P FOODS. All Rights Reserved.</p>
-</footer>
-
-<script>
-    function toggleMenu() {
-        const menuItems = document.getElementById('menuItems');
-        menuItems.style.display = menuItems.style.display === 'block' ? 'none' : 'block';
-    }
-
-    function showContent(section) {
-        const contents = document.querySelectorAll('.content');
-        contents.forEach(content => {
-            content.classList.remove('active');
-        });
-        document.getElementById(section).classList.add('active');
-        localStorage.setItem('activeSection', section);
-    }
-
-    window.onload = function() {
-        const activeSection = localStorage.getItem('activeSection') || 'home';
-        showContent(activeSection);
-    };
-</script>
-
-</body>
-</html>
+    <div class="product">
+        <img src="https://via.placeholder.com/150" alt="Edible Knife">
+        <p>Edible Knife</p>
+        <p>Price: ₹28</p>
+        <button class="add-to-cart" onclick="addToCart('Edible Knife', 28)">Add to Cart</button>
+    </div>
+    <div class="product">
+        <img src="https://via.placeholder.com/150" alt="Edible Cup">
+        <p>Edible Cup</p>
+        <p>Price: ₹35</p>
+        <button class="add-to-cart
