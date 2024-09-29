@@ -14,6 +14,7 @@
             padding: 0;
             color: #333;
             background: linear-gradient(to right, white, blue, orange);
+            overflow-x: hidden;
         }
         header {
             background-color: #6A0EBD;
@@ -36,6 +37,7 @@
             right: 0;
             background-color: white;
             border: 1px solid #ccc;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             z-index: 1000;
         }
         .menu-items a {
@@ -55,8 +57,20 @@
         .active {
             display: block;
         }
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            width: 100%;
+        }
         .products {
-            padding: 20px;
+            animation: bounce 0.6s ease forwards;
+        }
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0); }
         }
         .product {
             border: 1px solid #ccc;
@@ -71,22 +85,6 @@
             max-width: 100%;
             height: auto;
         }
-        .add-to-cart {
-            background-color: #FFD700;
-            color: #1C1C1C;
-            border: none;
-            padding: 10px;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 10px;
-            border-radius: 5px;
-        }
-        .quantity-controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 10px;
-        }
         .cart {
             position: absolute;
             right: 20px;
@@ -94,17 +92,11 @@
             font-size: 20px;
             cursor: pointer;
         }
-        .cart-content {
+        .checkout {
             display: none;
             padding: 20px;
-            text-align: left;
-        }
-        footer {
-            text-align: center;
-            padding: 10px;
-            background-color: #333;
-            color: #FFD700;
-            width: 100%;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
         }
         .cart-item {
             margin: 10px 0;
@@ -121,183 +113,180 @@
         <a href="#" onclick="showContent('home')">Home</a>
         <a href="#" onclick="showContent('about')">About Us</a>
         <a href="#" onclick="showContent('products')">Products</a>
-        <a href="#" onclick="showCart()">Cart</a>
+        <a href="#" onclick="showContent('checkout')">Checkout</a>
     </div>
-    <div class="cart" onclick="showCart()">🛒 Cart <span id="cartCount">0</span></div>
+    <div class="cart" onclick="showCart()">🛒 <span id="cartCount">0</span></div>
 </header>
 
 <!-- Home Section -->
 <div id="home" class="content active">
     <h2>Welcome to A.P FOODS!</h2>
-    <p>Specializing in organic edible cutlery to help reduce plastic waste.</p>
+    <p>Eat Your Cutlery!</p>
+    <div class="promotion">
+        <h2>Special Offers</h2>
+        <p>10% off on all products!</p>
+        <p>15% off on orders above ₹499!</p>
+        <p>Free shipping on orders above ₹499 + Free Gifts!</p>
+    </div>
 </div>
 
 <!-- About Us Section -->
 <div id="about" class="content">
-    <h2>About Us</h2>
-    <p>We provide innovative edible cutlery made from the finest ingredients.</p>
+    <h2>Welcome to A.P FOODS!</h2>
+    <p>We specialize in organic edible cutlery made from the finest ingredients.</p>
+    <p>Join us in our mission to reduce plastic waste and promote sustainability.</p>
 </div>
 
 <!-- Products Section -->
 <div id="products" class="content products">
     <h2>Our Products</h2>
-    <div class="product">
+    <div class="product" id="product1">
         <img src="https://via.placeholder.com/150" alt="Edible Spoon">
         <p>Edible Spoon - ₹20</p>
-        <div class="quantity-controls">
-            <button onclick="changeQuantity('spoon', -1)">-</button>
-            <span id="spoonQty">0</span>
-            <button onclick="changeQuantity('spoon', 1)">+</button>
-        </div>
-        <button class="add-to-cart" onclick="addToCart('Edible Spoon', 20, 'spoon')">Add to Cart</button>
+        <p id="product1Qty">0</p>
+        <button onclick="changeQuantity('product1', 1)">+</button>
+        <button onclick="changeQuantity('product1', -1)">-</button>
+        <button onclick="addToCart('Edible Spoon', 20, 'product1')">Add to Cart</button>
     </div>
-    <div class="product">
+    <div class="product" id="product2">
         <img src="https://via.placeholder.com/150" alt="Edible Bowl">
         <p>Edible Bowl - ₹30</p>
-        <div class="quantity-controls">
-            <button onclick="changeQuantity('bowl', -1)">-</button>
-            <span id="bowlQty">0</span>
-            <button onclick="changeQuantity('bowl', 1)">+</button>
-        </div>
-        <button class="add-to-cart" onclick="addToCart('Edible Bowl', 30, 'bowl')">Add to Cart</button>
+        <p id="product2Qty">0</p>
+        <button onclick="changeQuantity('product2', 1)">+</button>
+        <button onclick="changeQuantity('product2', -1)">-</button>
+        <button onclick="addToCart('Edible Bowl', 30, 'product2')">Add to Cart</button>
     </div>
-    <div class="product">
+    <div class="product" id="product3">
         <img src="https://via.placeholder.com/150" alt="Edible Fork">
         <p>Edible Fork - ₹25</p>
-        <div class="quantity-controls">
-            <button onclick="changeQuantity('fork', -1)">-</button>
-            <span id="forkQty">0</span>
-            <button onclick="changeQuantity('fork', 1)">+</button>
-        </div>
-        <button class="add-to-cart" onclick="addToCart('Edible Fork', 25, 'fork')">Add to Cart</button>
+        <p id="product3Qty">0</p>
+        <button onclick="changeQuantity('product3', 1)">+</button>
+        <button onclick="changeQuantity('product3', -1)">-</button>
+        <button onclick="addToCart('Edible Fork', 25, 'product3')">Add to Cart</button>
     </div>
-    <div class="product">
+    <div class="product" id="product4">
         <img src="https://via.placeholder.com/150" alt="Edible Knife">
-        <p>Edible Knife - ₹28</p>
-        <div class="quantity-controls">
-            <button onclick="changeQuantity('knife', -1)">-</button>
-            <span id="knifeQty">0</span>
-            <button onclick="changeQuantity('knife', 1)">+</button>
-        </div>
-        <button class="add-to-cart" onclick="addToCart('Edible Knife', 28, 'knife')">Add to Cart</button>
+        <p>Edible Knife - ₹30</p>
+        <p id="product4Qty">0</p>
+        <button onclick="changeQuantity('product4', 1)">+</button>
+        <button onclick="changeQuantity('product4', -1)">-</button>
+        <button onclick="addToCart('Edible Knife', 30, 'product4')">Add to Cart</button>
     </div>
-    <div class="product">
+    <div class="product" id="product5">
         <img src="https://via.placeholder.com/150" alt="Edible Cup">
-        <p>Edible Cup - ₹35</p>
-        <div class="quantity-controls">
-            <button onclick="changeQuantity('cup', -1)">-</button>
-            <span id="cupQty">0</span>
-            <button onclick="changeQuantity('cup', 1)">+</button>
-        </div>
-        <button class="add-to-cart" onclick="addToCart('Edible Cup', 35, 'cup')">Add to Cart</button>
+        <p>Edible Cup - ₹15</p>
+        <p id="product5Qty">0</p>
+        <button onclick="changeQuantity('product5', 1)">+</button>
+        <button onclick="changeQuantity('product5', -1)">-</button>
+        <button onclick="addToCart('Edible Cup', 15, 'product5')">Add to Cart</button>
     </div>
-    <div class="product">
+    <div class="product" id="product6">
         <img src="https://via.placeholder.com/150" alt="Edible Plate">
-        <p>Edible Plate - ₹40</p>
-        <div class="quantity-controls">
-            <button onclick="changeQuantity('plate', -1)">-</button>
-            <span id="plateQty">0</span>
-            <button onclick="changeQuantity('plate', 1)">+</button>
-        </div>
-        <button class="add-to-cart" onclick="addToCart('Edible Plate', 40, 'plate')">Add to Cart</button>
+        <p>Edible Plate - ₹35</p>
+        <p id="product6Qty">0</p>
+        <button onclick="changeQuantity('product6', 1)">+</button>
+        <button onclick="changeQuantity('product6', -1)">-</button>
+        <button onclick="addToCart('Edible Plate', 35, 'product6')">Add to Cart</button>
     </div>
-    <div class="product">
+    <div class="product" id="product7">
         <img src="https://via.placeholder.com/150" alt="Edible Straw">
-        <p>Edible Straw - ₹15</p>
-        <div class="quantity-controls">
-            <button onclick="changeQuantity('straw', -1)">-</button>
-            <span id="strawQty">0</span>
-            <button onclick="changeQuantity('straw', 1)">+</button>
-        </div>
-        <button class="add-to-cart" onclick="addToCart('Edible Straw', 15, 'straw')">Add to Cart</button>
+        <p>Edible Straw - ₹10</p>
+        <p id="product7Qty">0</p>
+        <button onclick="changeQuantity('product7', 1)">+</button>
+        <button onclick="changeQuantity('product7', -1)">-</button>
+        <button onclick="addToCart('Edible Straw', 10, 'product7')">Add to Cart</button>
     </div>
 </div>
 
-<!-- Cart Section -->
-<div id="cart" class="content cart-content">
-    <h2>Your Cart</h2>
+<!-- Checkout Section -->
+<div id="checkout" class="content checkout">
+    <h2>Checkout</h2>
     <div id="cartItems"></div>
     <div id="totalAmount"></div>
+    <button onclick="processPayment()">Proceed to Payment</button>
 </div>
 
 <footer>
-    <p><a href="#" onclick="showContent('about')">About Us</a> | <a href="#" onclick="showContent('privacy')">Privacy Policy</a> | <a href="#" onclick="showContent('contact')">Contact Us</a></p>
+    <p>Contact Us | About Us | Privacy Policy</p>
+    <p>&copy; 2023 A.P FOODS. All Rights Reserved.</</p>
 </footer>
 
-<!-- Privacy Policy Section -->
-<div id="privacy" class="content">
-    <h2>Privacy Policy</h2>
-    <p>Your privacy is important to us. This policy explains how we collect, use, and protect your information.</p>
-</div>
-
-<!-- Contact Us Section -->
-<div id="contact" class="content">
-    <h2>Contact Us</h2>
-    <p>If you have any questions, feel free to reach out to us at contact@apfoods.com.</p>
-</div>
-
 <script>
-    let cart = {};
-    let cartCount = 0;
+    let cart = [];
+    let quantities = {
+        product1: 0,
+        product2: 0,
+        product3: 0,
+        product4: 0,
+        product5: 0,
+        product6: 0,
+        product7: 0
+    };
 
     function toggleMenu() {
         const menuItems = document.getElementById('menuItems');
         menuItems.style.display = menuItems.style.display === 'block' ? 'none' : 'block';
     }
 
-    function showContent(contentId) {
+    function showContent(section) {
         const contents = document.querySelectorAll('.content');
         contents.forEach(content => {
             content.classList.remove('active');
         });
-        document.getElementById(contentId).classList.add('active');
-        toggleMenu();
+        document.getElementById(section).classList.add('active');
+    }
+
+    function addToCart(name, price, productId) {
+        const qty = quantities[productId];
+        if (qty > 0) {
+            cart.push({ name, price, quantity: qty });
+            updateCartCount();
+            updateCartDisplay();
+            quantities[productId] = 0;
+            document.getElementById(productId + 'Qty').innerText = '0';
+        } else {
+            alert('Please add at least one item to the cart.');
+        }
+    }
+
+    function changeQuantity(productId, delta) {
+        quantities[productId] += delta;
+        if (quantities[productId] < 0) quantities[productId] = 0;
+        document.getElementById(productId + 'Qty').innerText = quantities[productId];
+    }
+
+    function updateCartCount() {
+        const totalItems = Object.values(quantities).reduce((sum, qty) => sum + qty, 0);
+        document.getElementById('cartCount').innerText = totalItems;
     }
 
     function showCart() {
-        const cartContent = document.getElementById('cart');
-        const totalAmount = document.getElementById('totalAmount');
-        const cartItems = document.getElementById('cartItems');
-        
-        cartItems.innerHTML = '';
-        let total = 0;
-
-        for (const item in cart) {
-            cartItems.innerHTML += `<div class="cart-item">${item}: ${cart[item].qty} x ₹${cart[item].price} = ₹${cart[item].qty * cart[item].price}</div>`;
-            total += cart[item].qty * cart[item].price;
-        }
-
-        totalAmount.innerHTML = `<strong>Total: ₹${total}</strong>`;
-        cartCount = Object.keys(cart).length;
-        document.getElementById('cartCount').innerText = cartCount;
-        cartContent.classList.add('active');
+        showContent('checkout');
+        updateCartDisplay();
     }
 
-    function changeQuantity(product, change) {
-        const qtyElement = document.getElementById(`${product}Qty`);
-        let qty = parseInt(qtyElement.innerText) + change;
+    function updateCartDisplay() {
+        const cartItemsDiv = document.getElementById('cartItems');
+        const totalAmountDiv = document.getElementById('totalAmount');
+        cartItemsDiv.innerHTML = '';
+        let totalAmount = 0;
 
-        if (qty < 0) qty = 0;
-        qtyElement.innerText = qty;
+        cart.forEach(item => {
+            const itemDiv = document.createElement('div');
+            itemDiv.classList.add('cart-item');
+            itemDiv.innerText = `${item.name} - ₹${item.price} x ${item.quantity}`;
+            cartItemsDiv.appendChild(itemDiv);
+            totalAmount += item.price * item.quantity;
+        });
 
-        if (qty === 0) {
-            delete cart[product];
-        } else {
-            cart[product] = cart[product] || { qty: 0, price: parseInt(qtyElement.previousElementSibling.innerText.split(' - ₹')[1]) };
-            cart[product].qty = qty;
-        }
-        document.getElementById('cartCount').innerText = Object.values(cart).reduce((acc, item) => acc + item.qty, 0);
+        totalAmountDiv.innerText = `Total Amount: ₹${totalAmount}`;
     }
 
-    function addToCart(productName, price, productKey) {
-        const qty = parseInt(document.getElementById(`${productKey}Qty`).innerText);
-        if (qty > 0) {
-            cart[productName] = { qty, price };
-            document.getElementById('cartCount').innerText = Object.values(cart).reduce((acc, item) => acc + item.qty, 0);
-            alert(`${productName} added to cart.`);
-        } else {
-            alert('Please select a quantity greater than 0.');
-        }
+    function processPayment() {
+        alert('Payment processed successfully!');
+        cart = [];
+        updateCartCount();
+        showContent('home');
     }
 </script>
 
