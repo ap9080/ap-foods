@@ -12,12 +12,12 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            color: #FFD700; /* Gold color */
-            background: #1C1C1C; /* Matte black */
+            color: #333;
+            background: linear-gradient(to right, white, blue, orange);
         }
         header {
             background-color: #6A0EBD;
-            color: #FFD700;
+            color: white;
             padding: 20px;
             text-align: center;
             position: relative;
@@ -56,7 +56,6 @@
             display: block;
         }
         .products {
-            background: linear-gradient(to right, red, purple, maroon);
             padding: 20px;
         }
         .product {
@@ -82,6 +81,12 @@
             margin-top: 10px;
             border-radius: 5px;
         }
+        .quantity-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
         .cart {
             position: absolute;
             right: 20px;
@@ -94,15 +99,15 @@
             padding: 20px;
             text-align: left;
         }
-        .cart-item {
-            margin: 10px 0;
-        }
         footer {
             text-align: center;
             padding: 10px;
             background-color: #333;
             color: #FFD700;
             width: 100%;
+        }
+        .cart-item {
+            margin: 10px 0;
         }
     </style>
 </head>
@@ -118,7 +123,7 @@
         <a href="#" onclick="showContent('products')">Products</a>
         <a href="#" onclick="showCart()">Cart</a>
     </div>
-    <div class="cart" onclick="showCart()">🛒 Cart</div>
+    <div class="cart" onclick="showCart()">🛒 Cart <span id="cartCount">0</span></div>
 </header>
 
 <!-- Home Section -->
@@ -139,37 +144,72 @@
     <div class="product">
         <img src="https://via.placeholder.com/150" alt="Edible Spoon">
         <p>Edible Spoon - ₹20</p>
-        <button class="add-to-cart" onclick="addToCart('Edible Spoon', 20)">Add to Cart</button>
+        <div class="quantity-controls">
+            <button onclick="changeQuantity('spoon', -1)">-</button>
+            <span id="spoonQty">0</span>
+            <button onclick="changeQuantity('spoon', 1)">+</button>
+        </div>
+        <button class="add-to-cart" onclick="addToCart('Edible Spoon', 20, 'spoon')">Add to Cart</button>
     </div>
     <div class="product">
         <img src="https://via.placeholder.com/150" alt="Edible Bowl">
         <p>Edible Bowl - ₹30</p>
-        <button class="add-to-cart" onclick="addToCart('Edible Bowl', 30)">Add to Cart</button>
+        <div class="quantity-controls">
+            <button onclick="changeQuantity('bowl', -1)">-</button>
+            <span id="bowlQty">0</span>
+            <button onclick="changeQuantity('bowl', 1)">+</button>
+        </div>
+        <button class="add-to-cart" onclick="addToCart('Edible Bowl', 30, 'bowl')">Add to Cart</button>
     </div>
     <div class="product">
         <img src="https://via.placeholder.com/150" alt="Edible Fork">
         <p>Edible Fork - ₹25</p>
-        <button class="add-to-cart" onclick="addToCart('Edible Fork', 25)">Add to Cart</button>
+        <div class="quantity-controls">
+            <button onclick="changeQuantity('fork', -1)">-</button>
+            <span id="forkQty">0</span>
+            <button onclick="changeQuantity('fork', 1)">+</button>
+        </div>
+        <button class="add-to-cart" onclick="addToCart('Edible Fork', 25, 'fork')">Add to Cart</button>
     </div>
     <div class="product">
         <img src="https://via.placeholder.com/150" alt="Edible Knife">
         <p>Edible Knife - ₹28</p>
-        <button class="add-to-cart" onclick="addToCart('Edible Knife', 28)">Add to Cart</button>
+        <div class="quantity-controls">
+            <button onclick="changeQuantity('knife', -1)">-</button>
+            <span id="knifeQty">0</span>
+            <button onclick="changeQuantity('knife', 1)">+</button>
+        </div>
+        <button class="add-to-cart" onclick="addToCart('Edible Knife', 28, 'knife')">Add to Cart</button>
     </div>
     <div class="product">
         <img src="https://via.placeholder.com/150" alt="Edible Cup">
         <p>Edible Cup - ₹35</p>
-        <button class="add-to-cart" onclick="addToCart('Edible Cup', 35)">Add to Cart</button>
+        <div class="quantity-controls">
+            <button onclick="changeQuantity('cup', -1)">-</button>
+            <span id="cupQty">0</span>
+            <button onclick="changeQuantity('cup', 1)">+</button>
+        </div>
+        <button class="add-to-cart" onclick="addToCart('Edible Cup', 35, 'cup')">Add to Cart</button>
     </div>
     <div class="product">
         <img src="https://via.placeholder.com/150" alt="Edible Plate">
         <p>Edible Plate - ₹40</p>
-        <button class="add-to-cart" onclick="addToCart('Edible Plate', 40)">Add to Cart</button>
+        <div class="quantity-controls">
+            <button onclick="changeQuantity('plate', -1)">-</button>
+            <span id="plateQty">0</span>
+            <button onclick="changeQuantity('plate', 1)">+</button>
+        </div>
+        <button class="add-to-cart" onclick="addToCart('Edible Plate', 40, 'plate')">Add to Cart</button>
     </div>
     <div class="product">
         <img src="https://via.placeholder.com/150" alt="Edible Straw">
         <p>Edible Straw - ₹15</p>
-        <button class="add-to-cart" onclick="addToCart('Edible Straw', 15)">Add to Cart</button>
+        <div class="quantity-controls">
+            <button onclick="changeQuantity('straw', -1)">-</button>
+            <span id="strawQty">0</span>
+            <button onclick="changeQuantity('straw', 1)">+</button>
+        </div>
+        <button class="add-to-cart" onclick="addToCart('Edible Straw', 15, 'straw')">Add to Cart</button>
     </div>
 </div>
 
@@ -181,48 +221,83 @@
 </div>
 
 <footer>
-    <p>&copy; 2024 A.P FOODS. All rights reserved.</p>
+    <p><a href="#" onclick="showContent('about')">About Us</a> | <a href="#" onclick="showContent('privacy')">Privacy Policy</a> | <a href="#" onclick="showContent('contact')">Contact Us</a></p>
 </footer>
 
+<!-- Privacy Policy Section -->
+<div id="privacy" class="content">
+    <h2>Privacy Policy</h2>
+    <p>Your privacy is important to us. This policy explains how we collect, use, and protect your information.</p>
+</div>
+
+<!-- Contact Us Section -->
+<div id="contact" class="content">
+    <h2>Contact Us</h2>
+    <p>If you have any questions, feel free to reach out to us at contact@apfoods.com.</p>
+</div>
+
 <script>
-    let cart = [];
+    let cart = {};
+    let cartCount = 0;
 
     function toggleMenu() {
-        const menu = document.getElementById('menuItems');
-        menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        const menuItems = document.getElementById('menuItems');
+        menuItems.style.display = menuItems.style.display === 'block' ? 'none' : 'block';
     }
 
-    function showContent(id) {
+    function showContent(contentId) {
         const contents = document.querySelectorAll('.content');
-        contents.forEach(content => content.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-        document.getElementById('menuItems').style.display = 'none'; // Hide menu
+        contents.forEach(content => {
+            content.classList.remove('active');
+        });
+        document.getElementById(contentId).classList.add('active');
+        toggleMenu();
     }
 
     function showCart() {
-        const contents = document.querySelectorAll('.content');
-        contents.forEach(content => content.classList.remove('active'));
-        document.getElementById('cart').classList.add('active');
-        displayCart();
+        const cartContent = document.getElementById('cart');
+        const totalAmount = document.getElementById('totalAmount');
+        const cartItems = document.getElementById('cartItems');
+        
+        cartItems.innerHTML = '';
+        let total = 0;
+
+        for (const item in cart) {
+            cartItems.innerHTML += `<div class="cart-item">${item}: ${cart[item].qty} x ₹${cart[item].price} = ₹${cart[item].qty * cart[item].price}</div>`;
+            total += cart[item].qty * cart[item].price;
+        }
+
+        totalAmount.innerHTML = `<strong>Total: ₹${total}</strong>`;
+        cartCount = Object.keys(cart).length;
+        document.getElementById('cartCount').innerText = cartCount;
+        cartContent.classList.add('active');
     }
 
-    function addToCart(name, price) {
-        cart.push({ name, price });
-        alert(name + ' has been added to your cart!');
+    function changeQuantity(product, change) {
+        const qtyElement = document.getElementById(`${product}Qty`);
+        let qty = parseInt(qtyElement.innerText) + change;
+
+        if (qty < 0) qty = 0;
+        qtyElement.innerText = qty;
+
+        if (qty === 0) {
+            delete cart[product];
+        } else {
+            cart[product] = cart[product] || { qty: 0, price: parseInt(qtyElement.previousElementSibling.innerText.split(' - ₹')[1]) };
+            cart[product].qty = qty;
+        }
+        document.getElementById('cartCount').innerText = Object.values(cart).reduce((acc, item) => acc + item.qty, 0);
     }
 
-    function displayCart() {
-        const cartItemsDiv = document.getElementById('cartItems');
-        const totalAmountDiv = document.getElementById('totalAmount');
-        cartItemsDiv.innerHTML = '';
-        let totalAmount = 0;
-
-        cart.forEach(item => {
-            cartItemsDiv.innerHTML += `<div class="cart-item">${item.name} - ₹${item.price}</div>`;
-            totalAmount += item.price;
-        });
-
-        totalAmountDiv.innerHTML = `<strong>Total: ₹${totalAmount}</strong>`;
+    function addToCart(productName, price, productKey) {
+        const qty = parseInt(document.getElementById(`${productKey}Qty`).innerText);
+        if (qty > 0) {
+            cart[productName] = { qty, price };
+            document.getElementById('cartCount').innerText = Object.values(cart).reduce((acc, item) => acc + item.qty, 0);
+            alert(`${productName} added to cart.`);
+        } else {
+            alert('Please select a quantity greater than 0.');
+        }
     }
 </script>
 
