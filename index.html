@@ -6,7 +6,7 @@
     <title>A.P FOODS - Edible Cutlery</title>
     <style>
         * {
-            box-sizing: border-box; /* Ensures padding and borders are included in width and height */
+            box-sizing: border-box;
         }
         body {
             font-family: Arial, sans-serif;
@@ -14,10 +14,10 @@
             padding: 0;
             color: #333;
             background: linear-gradient(to right, white, blue);
-            overflow-x: hidden; /* Prevent horizontal scrolling */
+            overflow-x: hidden;
         }
         header {
-            background-color: #6A0EBD; /* Glossy purple */
+            background-color: #6A0EBD;
             color: white;
             padding: 20px;
             text-align: center;
@@ -50,12 +50,12 @@
             background-color: #f1f1f1;
         }
         .content {
-            display: none; /* Hide all content by default */
+            display: none;
             padding: 20px;
             text-align: center;
         }
         .active {
-            display: block; /* Show active content */
+            display: block;
         }
         footer {
             text-align: center;
@@ -66,19 +66,18 @@
         }
         .products {
             background: linear-gradient(to right, red, purple, maroon);
-            animation: bounce 0.6s ease forwards;
+            animation: zoomIn 0.5s ease forwards; /* New animation */
         }
-        @keyframes bounce {
-            0% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-            100% { transform: translateY(0); }
+        @keyframes zoomIn {
+            from { transform: scale(0); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
         .product {
             border: 1px solid #ccc;
-            margin: 10px; /* Reduced margin */
-            padding: 10px; /* Reduced padding */
-            width: calc(100% - 40px); /* Full width minus margins */
-            max-width: 200px; /* Limit max width */
+            margin: 10px;
+            padding: 10px;
+            width: calc(100% - 40px);
+            max-width: 200px;
             display: inline-block;
             vertical-align: top;
         }
@@ -96,19 +95,18 @@
             font-size: 20px;
             cursor: pointer;
         }
-        /* Media Queries for Responsive Design */
         @media (max-width: 600px) {
             header {
-                padding: 10px; /* Smaller padding for mobile */
+                padding: 10px;
             }
             .menu {
-                font-size: 20px; /* Smaller menu icon */
+                font-size: 20px;
             }
             .promotion h2, .promotion p {
-                font-size: 16px; /* Adjust font size for mobile */
+                font-size: 16px;
             }
             .product {
-                width: calc(100% - 20px); /* Adjust width for smaller screens */
+                width: calc(100% - 20px);
             }
         }
     </style>
@@ -139,6 +137,7 @@
         <p>Free shipping on orders above ₹499 + Free Gifts!</p>
         <p>Flat ₹50 shipping on orders below ₹499.</p>
     </div>
+    <img src="https://media.giphy.com/media/3oEjHMeh6GnC3t6FJa/giphy.gif" alt="Edible Cutlery" style="max-width: 100%; height: auto;">
 </div>
 
 <!-- About Us Section -->
@@ -161,8 +160,6 @@
         <p>Edible Bowl</p>
         <p>Price: ₹30</p>
     </div>
-    <!-- Add more products as needed -->
-
     <div class="payment-methods">
         <h3>Payment Methods</h3>
         <p>✔ Cash on Delivery (COD)</p>
@@ -171,9 +168,23 @@
     </div>
 </div>
 
+<!-- Contact Us Section -->
+<div id="contact" class="content">
+    <h2>Contact Us</h2>
+    <p>If you have any questions, feel free to reach out to us!</p>
+    <p>Email: support@apfoods.com</p>
+    <p>Phone: +123-456-7890</p>
+</div>
+
+<!-- Privacy Policy Section -->
+<div id="privacy" class="content">
+    <h2>Privacy Policy</h2>
+    <p>Your privacy is important to us. We will never share your personal information without your consent.</p>
+</div>
+
 <footer>
-    <p>Contact Us | About Us | Privacy Policy</p>
-    <p>&copy; 2024 A.P FOODS. All Rights Reserved.</p>
+    <p><a href="#" onclick="showContent('contact')">Contact Us</a> | <a href="#" onclick="showContent('about')">About Us</a> | <a href="#" onclick="showContent('privacy')">Privacy Policy</a></p>
+    <p>&copy; 2023 A.P FOODS. All Rights Reserved.</p>
 </footer>
 
 <script>
@@ -188,7 +199,13 @@
             content.classList.remove('active');
         });
         document.getElementById(section).classList.add('active');
+        localStorage.setItem('activeSection', section);
     }
+
+    window.onload = function() {
+        const activeSection = localStorage.getItem('activeSection') || 'home';
+        showContent(activeSection);
+    };
 </script>
 
 </body>
