@@ -6,18 +6,18 @@
     <title>A.P FOODS - Edible Cutlery</title>
     <style>
         * {
-            box-sizing: border-box; /* Ensures padding and borders are included in width and height */
+            box-sizing: border-box;
         }
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             color: #333;
-            background: linear-gradient(to right, white, blue);
-            overflow-x: hidden; /* Prevent horizontal scrolling */
+            background: linear-gradient(to right, white, blue, orange);
+            overflow-x: hidden;
         }
         header {
-            background-color: #6A0EBD; /* Glossy purple */
+            background-color: #6A0EBD;
             color: white;
             padding: 20px;
             text-align: center;
@@ -37,7 +37,7 @@
             right: 0;
             background-color: white;
             border: 1px solid #ccc;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             z-index: 1000;
         }
         .menu-items a {
@@ -49,13 +49,16 @@
         .menu-items a:hover {
             background-color: #f1f1f1;
         }
+        .search-bar {
+            margin-top: 10px;
+        }
         .content {
-            display: none; /* Hide all content by default */
+            display: none;
             padding: 20px;
             text-align: center;
         }
         .active {
-            display: block; /* Show active content */
+            display: block;
         }
         footer {
             text-align: center;
@@ -65,76 +68,37 @@
             width: 100%;
         }
         .products {
-            background: linear-gradient(to right, red, purple, maroon);
-            animation: bounce 0.6s ease forwards;
-        }
-        @keyframes bounce {
-            0% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-            100% { transform: translateY(0); }
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
         }
         .product {
             border: 1px solid #ccc;
-            margin: 20px;
-            padding: 20px;
-            width: calc(100% - 40px);
-            max-width: 200px;
-            display: inline-block;
-            vertical-align: top;
+            margin: 10px;
+            padding: 10px;
+            width: 200px;
+            text-align: center;
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         .product img {
             max-width: 100%;
             height: auto;
         }
-        .payment-methods {
-            margin-top: 20px;
-        }
-        .cart {
-            position: absolute;
-            right: 20px;
-            top: 60px;
-            font-size: 20px;
-            cursor: pointer;
-        }
         .cart-container {
             padding: 20px;
-            background-color: #f9f9f9;
+            text-align: left;
             border: 1px solid #ccc;
-            border-radius: 5px;
             margin: 20px;
+            background: #fff;
         }
         .cart-item {
-            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
         }
         .checkout {
             margin-top: 20px;
-            font-weight: bold;
-        }
-        .checkout button {
-            padding: 10px 20px;
-            background-color: #6A0EBD;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .checkout button:hover {
-            background-color: #5a0ca1;
-        }
-        /* Media Queries for Responsive Design */
-        @media (max-width: 600px) {
-            header {
-                padding: 10px; /* Smaller padding for mobile */
-            }
-            .menu {
-                font-size: 20px; /* Smaller menu icon */
-            }
-            .promotion h2, .promotion p {
-                font-size: 16px; /* Adjust font size for mobile */
-            }
-            .product {
-                width: calc(100% - 20px); /* Adjust width for smaller screens */
-            }
         }
     </style>
 </head>
@@ -143,20 +107,22 @@
 <header>
     <h1>A.P FOODS</h1>
     <p>Organic Edible Cutlery</p>
+    <input type="text" placeholder="Search products..." class="search-bar">
     <div class="menu" onclick="toggleMenu()">⋮</div>
     <div class="menu-items" id="menuItems">
         <a href="#" onclick="showContent('home')">Home</a>
         <a href="#" onclick="showContent('about')">About Us</a>
         <a href="#" onclick="showContent('products')">Products</a>
-        <a href="#" onclick="showContent('cart')">Cart</a>
+        <a href="#" onclick="showContent('checkout')">Checkout</a>
         <a href="#" onclick="showContent('privacy')">Privacy Policy</a>
         <a href="#" onclick="showContent('contact')">Contact Us</a>
     </div>
+    <div class="cart" onclick="showContent('cart')">🛒 Cart</div>
 </header>
 
 <!-- Home Section -->
 <div id="home" class="content active">
-    <div class="banner" style="height: 300px; background-image: url('https://image.shutterstock.com/image-photo/biodegradable-wheat-bran-tableware-made-1519695803'); background-size: cover;">
+    <div class="banner" style="height: 300px; background-image: url('https://image.shutterstock.com/image-photo/biodegradable-wheat-bran-tableware-made-1519695803'); background-size: cover; background-position: center;">
         <h1 style="color: white; position: relative; top: 50%; transform: translateY(-50%);">Eat Your Cutlery!</h1>
     </div>
     <div class="promotion">
@@ -178,56 +144,58 @@
 <!-- Products Section -->
 <div id="products" class="content">
     <h2>Our Products</h2>
-    <div class="product">
-        <img src="https://via.placeholder.com/150" alt="Edible Spoon">
-        <p>Edible Spoon</p>
-        <p>Price: ₹20</p>
-        <button onclick="addToCart({name: 'Edible Spoon', price: 20})">Add to Cart</button>
-    </div>
-    <div class="product">
-        <img src="https://via.placeholder.com/150" alt="Edible Bowl">
-        <p>Edible Bowl</p>
-        <p>Price: ₹30</p>
-        <button onclick="addToCart({name: 'Edible Bowl', price: 30})">Add to Cart</button>
-    </div>
-    <div class="product">
-        <img src="https://via.placeholder.com/150" alt="Edible Fork">
-        <p>Edible Fork</p>
-        <p>Price: ₹25</p>
-        <button onclick="addToCart({name: 'Edible Fork', price: 25})">Add to Cart</button>
-    </div>
-    <div class="product">
-        <img src="https://via.placeholder.com/150" alt="Edible Knife">
-        <p>Edible Knife</p>
-        <p>Price: ₹15</p>
-        <button onclick="addToCart({name: 'Edible Knife', price: 15})">Add to Cart</button>
-    </div>
-    <div class="product">
-        <img src="https://via.placeholder.com/150" alt="Edible Cup">
-        <p>Edible Cup</p>
-        <p>Price: ₹35</p>
-        <button onclick="addToCart({name: 'Edible Cup', price: 35})">Add to Cart</button>
-    </div>
-    <div class="product">
-        <img src="https://via.placeholder.com/150" alt="Edible Straw">
-        <p>Edible Straw</p>
-        <p>Price: ₹10</p>
-        <button onclick="addToCart({name: 'Edible Straw', price: 10})">Add to Cart</button>
-    </div>
-    <div class="product">
-        <img src="https://via.placeholder.com/150" alt="Edible Plate">
-        <p>Edible Plate</p>
-        <p>Price: ₹40</p>
-        <button onclick="addToCart({name: 'Edible Plate', price: 40})">Add to Cart</button>
+    <div class="products">
+        <div class="product">
+            <img src="https://via.placeholder.com/150" alt="Edible Spoon">
+            <p>Edible Spoon</p>
+            <p>Price: ₹20</p>
+            <button onclick="addToCart({name: 'Edible Spoon', price: 20})">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="https://via.placeholder.com/150" alt="Edible Bowl">
+            <p>Edible Bowl</p>
+            <p>Price: ₹30</p>
+            <button onclick="addToCart({name: 'Edible Bowl', price: 30})">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="https://via.placeholder.com/150" alt="Edible Fork">
+            <p>Edible Fork</p>
+            <p>Price: ₹25</p>
+            <button onclick="addToCart({name: 'Edible Fork', price: 25})">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="https://via.placeholder.com/150" alt="Edible Knife">
+            <p>Edible Knife</p>
+            <p>Price: ₹35</p>
+            <button onclick="addToCart({name: 'Edible Knife', price: 35})">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="https://via.placeholder.com/150" alt="Edible Cup">
+            <p>Edible Cup</p>
+            <p>Price: ₹40</p>
+            <button onclick="addToCart({name: 'Edible Cup', price: 40})">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="https://via.placeholder.com/150" alt="Edible Plate">
+            <p>Edible Plate</p>
+            <p>Price: ₹50</p>
+            <button onclick="addToCart({name: 'Edible Plate', price: 50})">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="https://via.placeholder.com/150" alt="Edible Straws">
+            <p>Edible Straws</p>
+            <p>Price: ₹15</p>
+            <button onclick="addToCart({name: 'Edible Straws', price: 15})">Add to Cart</button>
+        </div>
     </div>
 </div>
 
 <!-- Cart Section -->
 <div id="cart" class="content">
     <h2>Your Cart</h2>
-    <div id="cart-items" class="cart-container"></div>
+    <div class="cart-container" id="cart-items"></div>
     <div class="checkout">
-        <p>Total:<p>Total: ₹<span id="total-price">0</span></p>
+        <p>Total: ₹<span id="total-price">0</span></p>
         <p>Delivery Charges: ₹50</p>
         <p>Final Total: ₹<span id="final-total">0</span></p>
         <button onclick="checkout()">Proceed to Checkout</button>
@@ -256,8 +224,7 @@
 </div>
 
 <footer>
-    <p><a href="#" onclick="showContent('about')">About Us</a> | <a href="#" onclick="showContent('privacy')">Privacy Policy</a> | <a href="#" onclick="showContent('contact')">Contact Us</a></p>
-    <p>&copy; 2023 A.P FOODS. All Rights Reserved.</p>
+    <p<p>&copy; 2023 A.P FOODS. All Rights Reserved.</p>
 </footer>
 
 <script>
@@ -294,10 +261,10 @@
                 </div>`;
         });
 
+        const deliveryCharges = 50;
         document.getElementById('total-price').innerText = total;
-        const finalTotal = total + 50; // Adding delivery charges
+        const finalTotal = total + deliveryCharges;
         document.getElementById('final-total').innerText = finalTotal;
-        document.getElementById('checkout-total').innerText = finalTotal;
     }
 
     function removeFromCart(index) {
@@ -306,21 +273,21 @@
     }
 
     function checkout() {
+        showContent('checkout');
         const checkoutDetails = document.getElementById('checkout-details');
         checkoutDetails.innerHTML = '';
-
         cart.forEach(item => {
             checkoutDetails.innerHTML += `<p>${item.name} - ₹${item.price}</p>`;
         });
-
-        const total = parseInt(document.getElementById('final-total').innerText);
-        document.getElementById('checkout-total').innerText = total;
-        showContent('checkout');
+        const deliveryCharges = 50;
+        const total = cart.reduce((sum, item) => sum + item.price, 0);
+        const finalTotal = total + deliveryCharges;
+        document.getElementById('checkout-total').innerText = finalTotal;
     }
 
     function confirmOrder() {
-        alert("Order confirmed! Thank you for your purchase.");
-        cart = []; // Clear cart after confirmation
+        alert('Order Confirmed! Thank you for your purchase.');
+        cart = []; // Clear cart after order
         updateCart();
         showContent('home'); // Redirect to home after confirmation
     }
