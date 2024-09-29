@@ -13,7 +13,7 @@
             margin: 0;
             padding: 0;
             color: #333;
-            background: linear-gradient(to right, white, blue, orange);
+            background: linear-gradient(to right, white, blue);
             overflow-x: hidden;
         }
         header {
@@ -37,7 +37,7 @@
             right: 0;
             background-color: white;
             border: 1px solid #ccc;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             z-index: 1000;
         }
         .menu-items a {
@@ -64,36 +64,64 @@
             color: white;
             width: 100%;
         }
+        .products {
+            margin: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
         .product {
             border: 1px solid #ccc;
             margin: 10px;
-            padding: 10px;
-            width: calc(100% - 40px);
-            max-width: 200px;
-            display: inline-block;
-            vertical-align: top;
+            padding: 15px;
+            width: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         .product img {
             max-width: 100%;
             height: auto;
         }
-        .cart {
-            position: absolute;
-            right: 20px;
-            top: 60px;
-            font-size: 20px;
-            cursor: pointer;
+        .cart-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            width: 100%;
         }
-        .reviews {
-            margin-top: 20px;
+        .cart-buttons button {
+            padding: 5px;
         }
-        /* Media Queries */
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+        }
+        .quantity-controls button {
+            width: 30px;
+            height: 30px;
+        }
+        .checkout {
+            margin: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .checkout h2 {
+            margin-bottom: 15px;
+        }
+        .checkout-total {
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        /* Media Queries for Responsive Design */
         @media (max-width: 600px) {
             header {
                 padding: 10px;
             }
-            .menu {
-                font-size: 20px;
+            .product {
+                width: calc(100% - 40px);
             }
         }
     </style>
@@ -103,21 +131,19 @@
 <header>
     <h1>A.P FOODS</h1>
     <p>Organic Edible Cutlery</p>
-    <input type="text" placeholder="Search products..." id="searchBar" style="margin: 10px;">
     <div class="menu" onclick="toggleMenu()">⋮</div>
     <div class="menu-items" id="menuItems">
         <a href="#" onclick="showContent('home')">Home</a>
         <a href="#" onclick="showContent('about')">About Us</a>
         <a href="#" onclick="showContent('products')">Products</a>
-        <a href="#" onclick="showContent('contact')">Contact Us</a>
-        <a href="#" onclick="showContent('privacy')">Privacy Policy</a>
+        <a href="#" onclick="showContent('checkout')">Checkout</a>
     </div>
-    <div class="cart" onclick="showContent('cart')">🛒 Cart</div>
+    <div class="cart" onclick="showContent('checkout')">🛒 Cart (<span id="cartCount">0</span>)</div>
 </header>
 
 <!-- Home Section -->
 <div id="home" class="content active">
-    <div class="banner" style="height: 300px; background-image: url('https://image.shutterstock.com/image-photo/biodegradable-wheat-bran-tableware-made-1519695803'); background-size: cover;">
+    <div class="banner" style="height: 300px; background-image: url('https://image.shutterstock.com/image-photo/biodegradable-wheat-bran-tableware-made-1519695803'); background-size: cover; background-position: center;">
         <h1 style="color: white; position: relative; top: 50%; transform: translateY(-50%);">Eat Your Cutlery!</h1>
     </div>
     <div class="promotion">
@@ -126,14 +152,6 @@
         <p>15% off on orders above ₹499!</p>
         <p>Free shipping on orders above ₹499 + Free Gifts!</p>
         <p>Flat ₹50 shipping on orders below ₹499.</p>
-    </div>
-    <div class="reviews">
-        <h3>Customer Reviews</h3>
-        <p>⭐️⭐️⭐️⭐️⭐️ "Great product! Helped me reduce plastic waste." - John D.</p>
-        <p>⭐️⭐️⭐️⭐️⭐️ "Love the edible spoons! Perfect for parties." - Sarah K.</p>
-        <p>⭐️⭐️⭐️⭐️⭐️ "Quality is excellent, and taste is great!" - Mark T.</p>
-        <p>⭐️⭐️⭐️⭐️⭐️ "I use them daily, very convenient!" - Emily R.</p>
-        <p>⭐️⭐️⭐️⭐️⭐️ "Fantastic eco-friendly option!" - Alex B.</p>
     </div>
 </div>
 
@@ -147,79 +165,56 @@
 <!-- Products Section -->
 <div id="products" class="content">
     <h2>Our Products</h2>
-    <div class="product">
-        <img src="https://via.placeholder.com/150" alt="Edible Spoon">
-        <p>Edible Spoon</p>
-        <p>Price: ₹20</p>
-        <button onclick="addToCart('Edible Spoon', 20)">Add to Cart</button>
-    </div>
-    <div class="product">
-        <img src="https://via.placeholder.com/150" alt="Edible Bowl">
-        <p>Edible Bowl</p>
-        <p>Price: ₹30</p>
-        <button onclick="addToCart('Edible Bowl', 30)">Add to Cart</button>
-    </div>
-    <div class="product">
-        <img src="https://via.placeholder.com/150" alt="Edible Fork">
-        <p>Edible Fork</p>
-        <p>Price: ₹25</p>
-        <button onclick="addToCart('Edible Fork', 25)">Add to Cart</button>
-    </div>
-    <div class="product">
-        <img src="https://via.placeholder.com/150" alt="Edible Knife">
-        <p>Edible Knife</p>
-        <p>Price: ₹25</p>
-        <button onclick="addToCart('Edible Knife', 25)">Add to Cart</button>
-    </div>
-    <div class="product">
-        <img src="https://via.placeholder.com/150" alt="Edible Cup">
-        <p>Edible Cup</p>
-        <p>Price: ₹35</p>
-        <button onclick="addToCart('Edible Cup', 35)">Add to Cart</button>
-    </div>
-    <div class="product">
-        <img src="https://via.placeholder.com/150" alt="Edible Plate">
-        <p>Edible Plate</p>
-        <p>Price: ₹40</p>
-        <button onclick="addToCart('Edible Plate', 40)">Add to Cart</button>
-    </div>
-    <div class="product">
-        <img src="https://via.placeholder.com/150" alt="Edible Straw">
-        <p>Edible Straw</p>
-        <p>Price: ₹15</p>
-        <button onclick="addToCart('Edible Straw', 15)">Add to Cart</button>
+    <div class="products">
+        <!-- Example Products -->
+        <div class="product">
+            <img src="https://via.placeholder.com/150" alt="Edible Spoon">
+            <p>Edible Spoon</p>
+            <p>Price: ₹20</p>
+            <div class="quantity-controls">
+                <button onclick="changeQuantity('spoon', -1)">-</button>
+                <span id="spoonQuantity">0</span>
+                <button onclick="changeQuantity('spoon', 1)">+</button>
+            </div>
+            <div class="cart-buttons">
+                <button onclick="addToCart('Edible Spoon', 20)">Add to Cart</button>
+            </div>
+        </div>
+        <div class="product">
+            <img src="https://via.placeholder.com/150" alt="Edible Bowl">
+            <p>Edible Bowl</p>
+            <p>Price: ₹30</p>
+            <div class="quantity-controls">
+                <button onclick="changeQuantity('bowl', -1)">-</button>
+                <span id="bowlQuantity">0</span>
+                <button onclick="changeQuantity('bowl', 1)">+</button>
+            </div>
+            <div class="cart-buttons">
+                <button onclick="addToCart('Edible Bowl', 30)">Add to Cart</button>
+            </div>
+        </div>
+        <!-- Add more products as needed -->
     </div>
 </div>
 
-<!-- Contact Us Section -->
-<div id="contact" class="content">
-    <h2>Contact Us</h2>
-    <p>Email: support@apfoods.com</p>
-    <p>Phone: +1234567890</p>
-</div>
-
-<!-- Privacy Policy Section -->
-<div id="privacy" class="content">
-    <h2>Privacy Policy</h2>
-    <p>Your privacy is important to us. We will not share your information with third parties without your consent.</p>
-</div>
-
-<!-- Cart Section -->
-<div id="cart" class="content">
-    <h2>Your Cart</h2>
-    <div id="cartItems"></div>
-    <button onclick="checkout()">Checkout</button>
+<!-- Checkout Page -->
+<div id="checkout" class="content">
+    <div class="checkout">
+        <h2>Checkout</h2>
+        <div id="cartItems"></div>
+        <div class="checkout-total">Total: ₹<span id="totalPrice">0</span></div>
+        <button onclick="checkout()">Proceed to Payment</button>
+    </div>
 </div>
 
 <footer>
-    <p><a href="#" onclick="showContent('about')">About Us</a> | 
-       <a href="#" onclick="showContent('contact')">Contact Us</a> | 
-       <a href="#" onclick="showContent('privacy')">Privacy Policy</a></</p>
+    <p><a href="#" onclick="showContent('about')">About Us</a> | <a href="#" onclick="showContent('privacy')">Privacy Policy</a> | <a href="#" onclick="showContent('contact')">Contact Us</a></p>
     <p>&copy; 2023 A.P FOODS. All Rights Reserved.</p>
 </footer>
 
 <script>
     let cart = [];
+    let totalPrice = 0;
 
     function toggleMenu() {
         const menuItems = document.getElementById('menuItems');
@@ -232,6 +227,7 @@
             content.classList.remove('active');
         });
         document.getElementById(section).classList.add('active');
+        document.getElementById('menuItems').style.display = 'none'; // Hide menu on section change
     }
 
     function addToCart(productName, productPrice) {
@@ -244,17 +240,32 @@
         updateCartDisplay();
     }
 
+    function changeQuantity(productName, change) {
+        const product = cart.find(item => item.name === productName);
+        if (product) {
+            product.quantity += change;
+            if (product.quantity <= 0) {
+                cart = cart.filter(item => item.name !== productName);
+            }
+            updateCartDisplay();
+        }
+    }
+
     function updateCartDisplay() {
         const cartItems = document.getElementById('cartItems');
-        cartItems.innerHTML = ''; // Clear existing items
+        cartItems.innerHTML = '';
+        totalPrice =totalPrice = 0;
         cart.forEach(item => {
-            cartItems.innerHTML += `<div>${item.name} - ₹${item.price} x ${item.quantity}</div>`;
+            cartItems.innerHTML += `<div>${item.name} (₹${item.price}) x ${item.quantity}</div>`;
+            totalPrice += item.price * item.quantity;
         });
+        document.getElementById('totalPrice').innerText = totalPrice;
+        document.getElementById('cartCount').innerText = cart.length;
     }
 
     function checkout() {
-        alert('Proceeding to checkout...');
-        // Implement checkout logic here
+        alert("Proceeding to payment...");
+        // Implement payment processing logic here
     }
 </script>
 
